@@ -26,7 +26,6 @@ public class Guide {
     private String attendanceReq;
     private String comments;
 
-
     //JPA requires a no arg constructor !!!
     public Guide(){}
 

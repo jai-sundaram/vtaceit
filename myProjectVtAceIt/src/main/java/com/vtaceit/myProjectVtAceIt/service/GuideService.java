@@ -1,4 +1,36 @@
 package com.vtaceit.myProjectVtAceIt.service;
 
+import com.vtaceit.myProjectVtAceIt.model.Guide;
+import com.vtaceit.myProjectVtAceIt.repository.GuideRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
 public class GuideService {
+    private GuideRepo repo;
+
+    @Autowired
+    public GuideService(GuideRepo repo) {
+        this.repo = repo;
+    }
+
+    public List<Guide> getAll(){
+        return repo.findAll();
+    }
+
+    public void getByIdentifier(){
+
+    }
+
+    public void getByIdentifierAndProf(){
+
+    }
+
+    public void addGuide(Guide guide){
+        repo.save(guide);
+
+
+    }
 }

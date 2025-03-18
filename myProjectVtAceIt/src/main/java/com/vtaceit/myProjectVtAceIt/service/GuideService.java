@@ -3,6 +3,7 @@ package com.vtaceit.myProjectVtAceIt.service;
 import com.vtaceit.myProjectVtAceIt.model.Guide;
 import com.vtaceit.myProjectVtAceIt.repository.GuideRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class GuideService {
     }
 
     public List<Guide> getAll(){
-        return repo.findAll();
+        return repo.getByDate();
     }
 
 
@@ -28,7 +29,7 @@ public class GuideService {
     }
 
     public void addGuide(Guide guide){
-        Optional<Guide> exists = repo.alreadyExists(guide.getCourseName(), guide.getCourseDept(), guide.getCourseNumber(), guide.getProfName(), guide.getGrade(), guide.getDifficulty(), guide.getAttendanceReq(), guide.getComments(), guide.getSemTaken());
+        Optional<Guide> exists = repo.alreadyExists(guide.getCourseName(), guide.getCourseDept(), guide.getCourseNumber(), guide.getProfName(), guide.getGrade(), guide.getDifficulty(), guide.getAttendanceReq(), guide.getComments());
         if(exists.isPresent()){
             throw new IllegalStateException("Review already exists!");
         }

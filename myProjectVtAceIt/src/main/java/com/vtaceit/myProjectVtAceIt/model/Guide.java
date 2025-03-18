@@ -2,6 +2,8 @@ package com.vtaceit.myProjectVtAceIt.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table
 public class Guide {
@@ -26,12 +28,12 @@ public class Guide {
     private Integer difficulty;
     private String attendanceReq;
     private String comments;
-    private String semTaken;
+    private LocalDate date;
 
     //JPA requires a no arg constructor !!!
     public Guide(){}
 
-    public Guide(String courseName, String courseDept, Integer courseNumber, String profName, String grade, Integer difficulty, String attendanceReq, String comments, String semTaken) {
+    public Guide(String courseName, String courseDept, Integer courseNumber, String profName, String grade, Integer difficulty, String attendanceReq, String comments, LocalDate date) {
         this.courseName = courseName;
         this.courseDept = courseDept;
         this.courseNumber = courseNumber;
@@ -40,7 +42,7 @@ public class Guide {
         this.difficulty = difficulty;
         this.attendanceReq = attendanceReq;
         this.comments = comments;
-        this.semTaken = semTaken;
+        this.date = date;
     }
 
     public String getCourseName() {
@@ -107,11 +109,11 @@ public class Guide {
         this.comments = comments;
     }
 
-    public String getSemTaken() {
-        return semTaken;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setSemTaken(String semTaken) {
-        this.semTaken = semTaken;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

@@ -26,7 +26,8 @@ public class GuideService {
 
     }
 
-    public void getByIdentifierAndProf(){
+    public Optional<List<Guide>> getByIdentifierAndProf(String identifier, String prof){
+        return repo.getByIdentifierAndProf(identifier, prof);
 
     }
 

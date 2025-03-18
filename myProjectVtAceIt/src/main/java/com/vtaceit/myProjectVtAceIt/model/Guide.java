@@ -29,6 +29,7 @@ public class Guide {
     private String attendanceReq;
     private String comments;
     private LocalDate date;
+    private String semTaken;
 
     //JPA requires a no arg constructor !!!
     public Guide(){}
@@ -115,5 +116,13 @@ public class Guide {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getSemTaken() {
+        return semTaken;
+    }
+
+    public void setSemTaken(String semTaken) {
+        this.semTaken = semTaken;
     }
 }

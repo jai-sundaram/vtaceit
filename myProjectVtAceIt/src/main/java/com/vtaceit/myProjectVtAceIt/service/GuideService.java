@@ -21,13 +21,9 @@ public class GuideService {
         return repo.findAll();
     }
 
-    public Optional<List<Guide>> getByIdentifier(String identifier){
-        return repo.getByIdentifier(identifier);
 
-    }
-
-    public Optional<List<Guide>> getByIdentifierAndProf(String identifier, String prof){
-        return repo.getByIdentifierAndProf(identifier, prof);
+    public Optional<List<Guide>> getByIdentifier(String dept, Integer number){
+        return repo.getByIdentifier(dept, number);
 
     }
 

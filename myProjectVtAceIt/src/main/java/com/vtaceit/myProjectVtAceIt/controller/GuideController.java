@@ -24,14 +24,9 @@ public class GuideController {
 
     }
     //done
-    @GetMapping(path="getGuides/{identifier}")
-    public Optional<List<Guide>> getByIdentifier(@PathVariable("identifier") String identifier){
-        return service.getByIdentifier(identifier);
-
-    }
-    @GetMapping(path = "getGuides/{identifier}/{prof}")
-    public Optional<List<Guide>> getByIdentifierAndProf(@PathVariable("identifier") String identifier, @PathVariable("prof") String prof){
-        return service.getByIdentifierAndProf(identifier, prof);
+    @GetMapping(path = "getGuides/{dept}/{number}")
+    public Optional<List<Guide>> getByIdentifier(@PathVariable("dept") String dept, @PathVariable("number") Integer number){
+        return service.getByIdentifier(dept, number);
     }
     //done
     //add functionality which checks if there is already a dupe in the db

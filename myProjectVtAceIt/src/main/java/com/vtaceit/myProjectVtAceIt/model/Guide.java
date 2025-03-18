@@ -2,8 +2,6 @@ package com.vtaceit.myProjectVtAceIt.model;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
-
 @Entity
 @Table
 public class Guide {
@@ -21,27 +19,28 @@ public class Guide {
     @Id
     private Long guideId;
     private String courseName;
-    private String courseIdentifier;
+    private String courseDept;
+    private Integer courseNumber;
     private String profName;
     private String grade;
     private Integer difficulty;
     private String attendanceReq;
     private String comments;
-    private LocalDate postDate;
+    private String semTaken;
 
     //JPA requires a no arg constructor !!!
     public Guide(){}
 
-    public Guide(Long guideId, String courseName, String courseIdentifier, String profName, String grade, Integer difficulty, String attendanceReq, String comments, LocalDate postDate) {
-        this.guideId = guideId;
+    public Guide(String courseName, String courseDept, Integer courseNumber, String profName, String grade, Integer difficulty, String attendanceReq, String comments, String semTaken) {
         this.courseName = courseName;
-        this.courseIdentifier = courseIdentifier;
+        this.courseDept = courseDept;
+        this.courseNumber = courseNumber;
         this.profName = profName;
         this.grade = grade;
         this.difficulty = difficulty;
         this.attendanceReq = attendanceReq;
         this.comments = comments;
-        this.postDate = postDate;
+        this.semTaken = semTaken;
     }
 
     public String getCourseName() {
@@ -52,12 +51,20 @@ public class Guide {
         this.courseName = courseName;
     }
 
-    public String getCourseIdentifier() {
-        return courseIdentifier;
+    public String getCourseDept() {
+        return courseDept;
     }
 
-    public void setCourseIdentifier(String courseIdentifier) {
-        this.courseIdentifier = courseIdentifier;
+    public void setCourseDept(String courseDept) {
+        this.courseDept = courseDept;
+    }
+
+    public Integer getCourseNumber() {
+        return courseNumber;
+    }
+
+    public void setCourseNumber(Integer courseNumber) {
+        this.courseNumber = courseNumber;
     }
 
     public String getProfName() {
@@ -98,5 +105,13 @@ public class Guide {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public String getSemTaken() {
+        return semTaken;
+    }
+
+    public void setSemTaken(String semTaken) {
+        this.semTaken = semTaken;
     }
 }

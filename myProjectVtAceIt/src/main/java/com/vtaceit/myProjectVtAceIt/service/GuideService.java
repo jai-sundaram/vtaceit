@@ -28,6 +28,10 @@ public class GuideService {
     }
 
     public void addGuide(Guide guide){
+        Optional<Guide> exists = repo.alreadyExists(guide.getCourseName(), guide.getCourseDept(), guide.getCourseNumber(), guide.getProfName(), guide.getGrade(), guide.getDifficulty(), guide.getAttendanceReq(), guide.getComments(), guide.getSemTaken());
+        if(exists.isPresent()){
+            throw new IllegalStateException("Review already exists!");
+        }
         repo.save(guide);
 
 

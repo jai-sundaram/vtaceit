@@ -19,7 +19,7 @@ public class GuideService {
     }
 
     public List<Guide> getAll() {
-        return repo.getByDate();
+        return repo.getAll();
     }
 
 

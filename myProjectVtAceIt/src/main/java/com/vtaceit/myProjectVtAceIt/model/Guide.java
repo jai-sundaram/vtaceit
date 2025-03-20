@@ -34,7 +34,7 @@ public class Guide {
     //JPA requires a no arg constructor !!!
     public Guide(){}
 
-    public Guide(String courseName, String courseDept, Integer courseNumber, String profName, String grade, Integer difficulty, String attendanceReq, String comments, LocalDate date) {
+    public Guide(String courseName, String courseDept, Integer courseNumber, String profName, String grade, Integer difficulty, String attendanceReq, String comments, LocalDate date, String semTaken) {
         this.courseName = courseName;
         this.courseDept = courseDept;
         this.courseNumber = courseNumber;
@@ -44,6 +44,7 @@ public class Guide {
         this.attendanceReq = attendanceReq;
         this.comments = comments;
         this.date = date;
+        this.semTaken = semTaken;
     }
 
     public String getCourseName() {

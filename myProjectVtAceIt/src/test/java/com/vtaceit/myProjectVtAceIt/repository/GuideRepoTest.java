@@ -22,10 +22,9 @@ class GuideRepoTest {
     void tearDown() {
         underTest.deleteAll();
     }
-    @Disabled
     @Test
     void getByDate() {
-        Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class ",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
+        Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
         Guide guide2 = new Guide("General Chemistry 1", "CHEM", 1035, "Wagner", "A", 1, "Mandatory", "fun class",  LocalDate.of(2021, Month.JANUARY,5), "Fall 2024");
         Guide guide3 = new Guide("Calculus 1", "MATH", 1225, "Gamble", "A", 1, "Mandatory", "decent class",  LocalDate.of(1994, Month.JANUARY,5), "Fall 2024");
         underTest.save(guide1);
@@ -49,6 +48,8 @@ class GuideRepoTest {
         List<Guide> myResults = underTest.getByIdentifier("CS",2505).get();
 
         assertThat(myResults.size()).isEqualTo(2);
+        assertThat(myResults.getFirst()).isEqualTo(guide4);
+        assertThat(myResults.getLast()).isEqualTo(guide5);
 
     }
 

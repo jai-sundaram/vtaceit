@@ -24,8 +24,15 @@ public class GuideService {
 
 
     public List<Guide> getByIdentifier(String dept, Integer number) {
-        List<Guide> exists = repo.getByIdentifier(dept, number).orElseThrow(() -> new IllegalStateException("No results satisfy the criteria."));;
-        return exists;
+        Optional<List<Guide>> exists = repo.getByIdentifier(dept, number);
+        List<Guide> list = exists.get();
+        if(list.isEmpty()){
+            throw new IllegalStateException("No reviews fit the criteria");
+        }
+        else{
+            return list;
+
+        }
 
     }
 

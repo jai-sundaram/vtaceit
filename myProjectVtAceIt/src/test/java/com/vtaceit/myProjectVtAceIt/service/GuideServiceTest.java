@@ -2,6 +2,7 @@ package com.vtaceit.myProjectVtAceIt.service;
 
 import com.vtaceit.myProjectVtAceIt.model.Guide;
 import com.vtaceit.myProjectVtAceIt.repository.GuideRepo;
+import net.bytebuddy.pool.TypePool;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ class GuideServiceTest {
     void setUp() {
         underTest = new GuideService(repo);
     }
-    @Disabled
+
     @Test
     void getAll() {
         underTest.getAll();
@@ -48,21 +49,26 @@ class GuideServiceTest {
     //so, we are assuming that the entry exists and therepo will return this given object, so the service should also return this object
    void getByIdentifier() {
         Guide guide = new Guide("Foundations of Engineering", "ENGE", 1216, "James", "B-", 3, "Optional", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
-        List<Guide> guidesList = new ArrayList<>();
+       Guide guide2 = new Guide("Foundations of Engineering", "ENGE", 1216, "Lo", "B-", 3, "Optional", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
+       List<Guide> guidesList = new ArrayList<>();
         guidesList.add(guide);
-        when(repo.getByIdentifier("ENGE", 1216)).thenReturn(Optional.of(guidesList));
+       guidesList.add(guide2);
+       when(repo.getByIdentifier("ENGE", 1216)).thenReturn(Optional.of(guidesList));
         repo.getByIdentifier("ENGE", 1216);
         verify(repo).getByIdentifier("ENGE", 1216);
     }
     //inn this case, we are mocking the repo such that no entry with the correspnding coursedept and number exist
     //so, in that case the service class should throw an exception
     //we are only mocking a response from repo, not actually checking if an entry exists in the db 
-    @Disabled
     @Test
     void cannotGetByIdentifier(){
+        List<Guide> guidesList = new ArrayList<>();
+        when(repo.getByIdentifier("MATH",  3114)).thenReturn(Optional.of(guidesList));
+        assertThatThrownBy(()->underTest.getByIdentifier("MATH",3114)).isInstanceOf(IllegalStateException.class).hasMessageContaining("No reviews fit the criteria");
+
 
     }
-    @Disabled
+
     @Test
     void canAdd() {
         Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
@@ -72,7 +78,6 @@ class GuideServiceTest {
         Guide capturedGuide = guideArgumentCaptor.getValue();
         assertThat(capturedGuide).isEqualTo(guide1);
     }
-    @Disabled
     @Test
     void cannotAdd(){
 

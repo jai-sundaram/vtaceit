@@ -31,7 +31,7 @@ public class GuideController {
     }
     //done
     //add functionality which checks if there is already a dupe in the db
-    @PostMapping(path="addGuide")
+    @PostMapping(path="newGuide")
     public void addGuide(@RequestBody Guide guide){
         service.addGuide(guide);
 

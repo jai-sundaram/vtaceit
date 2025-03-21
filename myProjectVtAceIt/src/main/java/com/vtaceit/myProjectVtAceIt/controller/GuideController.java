@@ -27,7 +27,7 @@ public class GuideController {
     //done
     @GetMapping(path = "getGuides/{dept}/{number}")
     public Optional<List<Guide>> getByIdentifier(@PathVariable("dept") String dept, @PathVariable("number") Integer number){
-        return service.getByIdentifier(dept, number);
+        return Optional.ofNullable(service.getByIdentifier(dept, number));
     }
     //done
     //add functionality which checks if there is already a dupe in the db

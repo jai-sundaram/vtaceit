@@ -23,8 +23,9 @@ public class GuideService {
     }
 
 
-    public Optional<List<Guide>> getByIdentifier(String dept, Integer number) {
-        return repo.getByIdentifier(dept, number);
+    public List<Guide> getByIdentifier(String dept, Integer number) {
+        List<Guide> exists = repo.getByIdentifier(dept, number).orElseThrow(() -> new IllegalStateException("No results satisfy the criteria."));;
+        return exists;
 
     }
 
@@ -33,7 +34,8 @@ public class GuideService {
         if (exists.isPresent()) {
             throw new IllegalStateException("Review already exists!");
         }
-        repo.save(guide);
+        else{
+        repo.save(guide); }
 
 
     }

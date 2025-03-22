@@ -19,19 +19,19 @@ public class GuideController {
         this.service = service;
     }
     //done
-    @GetMapping(path="allGuides")
+    @GetMapping(path="/allGuides")
     public List<Guide> getAll(){
         return service.getAll();
 
     }
     //done
-    @GetMapping(path = "guides/{dept}/{number}")
+    @GetMapping(path = "/guides/{dept}/{number}")
     public List<Guide> getByIdentifier(@PathVariable("dept") String dept, @PathVariable("number") Integer number){
         return service.getByIdentifier(dept, number);
     }
     //done
     //add functionality which checks if there is already a dupe in the db
-    @PostMapping(path="newGuide")
+    @PostMapping(path="/newGuide")
     public void addGuide(@RequestBody Guide guide){
         service.addGuide(guide);
 

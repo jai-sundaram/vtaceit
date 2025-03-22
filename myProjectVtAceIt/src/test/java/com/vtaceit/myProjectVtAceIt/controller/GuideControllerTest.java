@@ -32,7 +32,26 @@ class GuideControllerTest {
 
     @Test
     @Disabled
-    void getAll() {
+    void getAll() throws Exception {
+        Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
+        Guide guide2 = new Guide("General Chemistry 1", "CHEM", 1035, "Wagner", "A", 1, "Mandatory", "fun class",  LocalDate.of(2021, Month.JANUARY,5), "Fall 2024");
+        Guide guide3 = new Guide("Calculus 1", "MATH", 1225, "Gamble", "A", 1, "Mandatory", "decent class",  LocalDate.of(1994, Month.JANUARY,5), "Fall 2024");
+        List<Guide> guides = new ArrayList<>();
+        guides.add(guide2);
+        guides.add(guide1);
+        guides.add(guide3);
+        when(guideService.getAll()).thenReturn(guides);
+        mockMvc.perform(get("/allGuides")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].courseDept").value("CHEM"))
+                .andExpect(jsonPath("$[0].courseNumber").value("1035"))
+                .andExpect(jsonPath("$[1].courseDept").value("ENGE"))
+                .andExpect(jsonPath("$[1].courseNumber").value("1215"))
+                .andExpect(jsonPath("$[2].courseDept").value("MATH"))
+                .andExpect(jsonPath("$[2].courseNumber").value("1225"));
+
+
     }
 
     @Test

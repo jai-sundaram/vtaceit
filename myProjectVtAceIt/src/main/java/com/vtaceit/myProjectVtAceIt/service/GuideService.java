@@ -41,9 +41,6 @@ public class GuideService {
         if (exists.isPresent()) {
             throw new IllegalStateException("Review already exists!");
         }
-        else{
-        repo.save(guide); }
+        repo.save(guide);
 
-
-    }
-}
+}}

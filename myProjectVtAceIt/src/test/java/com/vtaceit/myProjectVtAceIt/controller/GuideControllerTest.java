@@ -34,19 +34,19 @@ class GuideControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-    @Disabled
+
     @Test
     void getAll() throws Exception {
-        Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
-        Guide guide2 = new Guide("General Chemistry 1", "CHEM", 1035, "Wagner", "A", 1, "Mandatory", "fun class",  LocalDate.of(2021, Month.JANUARY,5), "Fall 2024");
-        Guide guide3 = new Guide("Calculus 1", "MATH", 1225, "Gamble", "A", 1, "Mandatory", "decent class",  LocalDate.of(1994, Month.JANUARY,5), "Fall 2024");
+        Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class", LocalDate.of(2000, Month.JANUARY, 5), "Fall 2024");
+        Guide guide2 = new Guide("General Chemistry 1", "CHEM", 1035, "Wagner", "A", 1, "Mandatory", "fun class", LocalDate.of(2021, Month.JANUARY, 5), "Fall 2024");
+        Guide guide3 = new Guide("Calculus 1", "MATH", 1225, "Gamble", "A", 1, "Mandatory", "decent class", LocalDate.of(1994, Month.JANUARY, 5), "Fall 2024");
         List<Guide> guides = new ArrayList<>();
         guides.add(guide2);
         guides.add(guide1);
         guides.add(guide3);
         when(guideService.getAll()).thenReturn(guides);
         mockMvc.perform(get("/allGuides")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].courseDept").value("CHEM"))
                 .andExpect(jsonPath("$[0].courseNumber").value("1035"))
@@ -57,20 +57,20 @@ class GuideControllerTest {
 
 
     }
-    @Disabled
+
     @Test
     void getByIdentifier() throws Exception {
-        Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
-        Guide guide2 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "B", 3, "Mandatory", "participate in class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
+        Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class", LocalDate.of(2000, Month.JANUARY, 5), "Fall 2024");
+        Guide guide2 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "B", 3, "Mandatory", "participate in class", LocalDate.of(2000, Month.JANUARY, 5), "Fall 2024");
         List<Guide> guidesList = new ArrayList<>();
         guidesList.add(guide1);
         guidesList.add(guide2);
         //mocking the service response
-        when(guideService.getByIdentifier("ENGE",1215)).thenReturn(guidesList);
+        when(guideService.getByIdentifier("ENGE", 1215)).thenReturn(guidesList);
         //first specifiying the endpoint and the variable
         mockMvc.perform(get("/guides/{dept}/{number}", "ENGE", 1215)
-                //specifying that it will return a json
-                .contentType(MediaType.APPLICATION_JSON))
+                        //specifying that it will return a json
+                        .contentType(MediaType.APPLICATION_JSON))
                 //status should be ok
                 .andExpect(status().isOk())
                 //specifying some aspects of the result
@@ -81,23 +81,27 @@ class GuideControllerTest {
     }
     @Test
     void addGuide() throws Exception {
-        Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
-        doNothing().when(guideService).addGuide(guide1);
+        Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class", LocalDate.of(2000, Month.JANUARY, 5), "Fall 2024");
+        doNothing().when(guideService).addGuide(any(Guide.class));
         mockMvc.perform(post("/newGuide")
-                //passing in the object as a json
-                .content(objectMapper.writeValueAsString(guide1)))
+                        //passing in the object as a json
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(guide1)))
                 .andExpect(status().isOk());
     }
 
     @Test
-    void cannotAddGuide() throws Exception {
-        Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
-        doNothing().when(guideService).addGuide(guide1);
-        //if the method u are mocking returns void, use the 'do' method
-        doThrow(new IllegalStateException("Review already exists!")).when(guideService).addGuide(guide1);
-        mockMvc.perform(post("/newGuide")
-                .content(objectMapper.writeValueAsString(guide1)))
-                .andExpect(status().isInternalServerError());
+            void cannotAddGuide() throws Exception {
+                Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class", LocalDate.of(2000, Month.JANUARY, 5), "Fall 2024");
+                //if the method u are mocking returns void, use the 'do' method
+        //i am using any(Guide.class) instead of a certain Guide object because in a real world scenario, any variant object the Guide object can be passed in, not just one with certain parameters
+        //this is useful for mocking
+        doThrow(new IllegalStateException("Review already exists!")).when(guideService).addGuide(any(Guide.class));
+                mockMvc.perform(post("/newGuide")
+                                .contentType(MediaType.APPLICATION_JSON)
+                        //cant use any(Guide.class) here because it expects an actual object, not a mock
+                                .content(objectMapper.writeValueAsString(guide1)))
+                        .andExpect(status().isConflict());
 
-    }
+            }
 }

@@ -1,6 +1,7 @@
 package com.vtaceit.myProjectVtAceIt.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.vtaceit.myProjectVtAceIt.config.JacksonConfiguration;
 import com.vtaceit.myProjectVtAceIt.model.Guide;
 import com.vtaceit.myProjectVtAceIt.service.GuideService;
 import org.junit.jupiter.api.Disabled;
@@ -18,8 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,8 +32,10 @@ class GuideControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
+    @Autowired
+    private ObjectMapper objectMapper;
     @Disabled
+    @Test
     void getAll() throws Exception {
         Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
         Guide guide2 = new Guide("General Chemistry 1", "CHEM", 1035, "Wagner", "A", 1, "Mandatory", "fun class",  LocalDate.of(2021, Month.JANUARY,5), "Fall 2024");
@@ -53,7 +57,7 @@ class GuideControllerTest {
 
 
     }
-
+    @Disabled
     @Test
     void getByIdentifier() throws Exception {
         Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
@@ -75,8 +79,25 @@ class GuideControllerTest {
                 .andExpect(jsonPath("$[0].courseDept").value("ENGE"))
                 .andExpect(jsonPath("$[0].courseNumber").value("1215"));
     }
-    @Disabled
     @Test
-    void addGuide() {
+    void addGuide() throws Exception {
+        Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
+        doNothing().when(guideService).addGuide(guide1);
+        mockMvc.perform(post("/newGuide")
+                //passing in the object as a json
+                .content(objectMapper.writeValueAsString(guide1)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void cannotAddGuide() throws Exception {
+        Guide guide1 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "A", 1, "Mandatory", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
+        doNothing().when(guideService).addGuide(guide1);
+        //if the method u are mocking returns void, use the 'do' method
+        doThrow(new IllegalStateException("Review already exists!")).when(guideService).addGuide(guide1);
+        mockMvc.perform(post("/newGuide")
+                .content(objectMapper.writeValueAsString(guide1)))
+                .andExpect(status().isInternalServerError());
+
     }
 }

@@ -49,23 +49,22 @@ class GuideServiceTest {
     //so, we are assuming that the entry exists and therepo will return this given object, so the service should also return this object
    void getByIdentifier() {
         Guide guide = new Guide("Foundations of Engineering", "ENGE", 1216, "James", "B-", 3, "Optional", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
-       Guide guide2 = new Guide("Foundations of Engineering", "ENGE", 1216, "Lo", "B-", 3, "Optional", "very cool class",  LocalDate.of(2000, Month.JANUARY,5), "Fall 2024");
+       Guide guide2 = new Guide("Foundations of Engineering", "ENGE", 1215, "Lo", "B-", 3, "Optional", "very cool class",  LocalDate.of(2000, Month.FEBRUARY,5), "Fall 2024");
        List<Guide> guidesList = new ArrayList<>();
         guidesList.add(guide);
        guidesList.add(guide2);
-       when(repo.getByIdentifier("ENGE", 1216)).thenReturn(Optional.of(guidesList));
-        repo.getByIdentifier("ENGE", 1216);
-        verify(repo).getByIdentifier("ENGE", 1216);
-    }
+       when(repo.getByIdentifier("ENGE", 1216)).thenReturn(guidesList);
+        assertThat(underTest.getByIdentifier("ENGE",1216)).isEqualTo(guidesList);
+   }
     //inn this case, we are mocking the repo such that no entry with the correspnding coursedept and number exist
     //so, in that case the service class should throw an exception
     //we are only mocking a response from repo, not actually checking if an entry exists in the db 
     @Test
     void cannotGetByIdentifier(){
         List<Guide> guidesList = new ArrayList<>();
-        when(repo.getByIdentifier("MATH",  3114)).thenReturn(Optional.of(guidesList));
+        when(repo.getByIdentifier("MATH",  3114)).thenReturn(guidesList);
+        assertThat(repo.getByIdentifier("MATH",3114)).isEmpty();
         assertThatThrownBy(()->underTest.getByIdentifier("MATH",3114)).isInstanceOf(IllegalStateException.class).hasMessageContaining("No reviews fit the criteria");
-
 
     }
 

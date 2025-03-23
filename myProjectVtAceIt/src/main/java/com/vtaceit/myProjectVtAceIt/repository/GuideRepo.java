@@ -11,7 +11,7 @@ public interface GuideRepo extends JpaRepository<Guide, Long> {
 
     //selecting from the Model class, not through database name
     @Query("Select g from Guide g where g.courseDept=?1 and g.courseNumber=?2 order by g.date desc")
-    Optional<List<Guide>> getByIdentifier(String courseDept, Integer courseNumber);
+    List<Guide> getByIdentifier(String courseDept, Integer courseNumber);
     @Query("Select g from Guide g order by g.date desc")
     List<Guide> getAll();
 

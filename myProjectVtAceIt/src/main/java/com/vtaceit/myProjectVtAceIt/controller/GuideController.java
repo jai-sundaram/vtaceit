@@ -25,10 +25,14 @@ public class GuideController {
         return service.getAll();
 
     }
-    //done
-    @GetMapping(path = "/guides/{dept}/{number}")
-    public List<Guide> getByIdentifier(@PathVariable("dept") String dept, @PathVariable("number") Integer number){
-            return service.getByIdentifier(dept, number);
+    ///guides?dept={deptName}&number={courseNumber} will be the actual path
+    //if you are using this format, u need to use the @RequestParam annotation instead of @PathVariable annotation
+    //also, if you are using request parameters isntead of path variables, you just need the general path, not actually specify the paramaters
+    //so it will be just /guides in the path of the GetMapping
+    //spring will automatically generate that path
+    @GetMapping(path = "/guides")
+    public List<Guide> getByIdentifier(@RequestParam(value ="dept", required = true) String deptName, @RequestParam(value = "number", required = true) Integer courseNumber){
+            return service.getByIdentifier(deptName, courseNumber);
     }
     //done
     //add functionality which checks if there is already a dupe in the db

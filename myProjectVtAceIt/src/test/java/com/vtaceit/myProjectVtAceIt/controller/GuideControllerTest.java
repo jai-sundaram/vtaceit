@@ -68,7 +68,9 @@ class GuideControllerTest {
         //mocking the service response
         when(guideService.getByIdentifier("ENGE", 1215)).thenReturn(guidesList);
         //first specifiying the endpoint and the variable
-        mockMvc.perform(get("/guides/{dept}/{number}", "ENGE", 1215)
+        mockMvc.perform(get("/guides")
+                                .param("dept", "ENGE")
+                                .param("number", String.valueOf(1215))
                         //specifying that it will return a json
                         .contentType(MediaType.APPLICATION_JSON))
                 //status should be ok

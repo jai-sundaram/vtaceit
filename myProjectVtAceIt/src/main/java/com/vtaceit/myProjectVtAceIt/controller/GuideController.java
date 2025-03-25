@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-
+//adding this annotation to prevent cors errors
+@CrossOrigin
 @RequestMapping()
 public class GuideController {
     private GuideService service;

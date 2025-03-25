@@ -2,6 +2,7 @@
 @theme {
     --color-vtpurple: #782c44;
     --color-vtorange: #b74e2f;
+    --color-vtgray: #918c89;
 }
 
 @layer base{

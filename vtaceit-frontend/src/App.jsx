@@ -1,33 +1,20 @@
-import {useEffect, useState} from 'react'
+import React from 'react'
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import Current from "./pages/Current.jsx";
+import NewGuide from "./pages/NewGuide.jsx";
+import Home from "./pages/Home.jsx";
 
-import './App.css'
-import Guide from "./assets/Guide.jsx";
-import axios from "axios";
+const App = () => {
+    return (
+        <Router>
+            <Routes>
+                <Route path = "/" element ={<Current />} />
+                <Route path = "/newGuide" element ={<NewGuide />} />
+                <Route path = "/home" element ={<Home />} />
+            </Routes>
+        </Router>
 
-function App() {
-  const [guides, setGuides] = useState([]);
+    );
 
-  useEffect(()=>{
-    const getData = async() =>{
-      try{
-        const response = await axios.get("http://localhost:8080/allGuides");
-        setGuides(response.data);
-        console.log(response.data);
-      }
-      catch(err){
-        console.log(err);
-      }
-    };
-    getData();
-  }, [])
-  return (
-      <ul className = "flex flex-col gap-20 justify-center max-w-screen">
-        {guides.map((guide)=>(
-            <Guide guide = {guide} />
-            ))}
-        <br />
-      </ul>
-  )
 }
-
 export default App

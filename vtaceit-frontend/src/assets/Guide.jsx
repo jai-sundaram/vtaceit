@@ -4,7 +4,7 @@ const Guide = ({guide}) => {
 
     return (
         <div className="border-2 w-250 h-100 bg-vtorange ">
-            <h1 className = "mt-5 mr-219 mt-">DIFFICULTY</h1>
+            <h1 className = "mt-5 ml-5 mt-">DIFFICULTY</h1>
 
             <div className="mt-1">
                 <h2 className = "text-white float-left ml-35  text-lg">Professor: {guide.profName}</h2>
@@ -16,7 +16,7 @@ const Guide = ({guide}) => {
                 <h2 className = "text-white float-left ml-40 mt-1">Semester: {guide.semTaken}</h2>
                 <h2 className = "text-white float-left ml-40 mt-1">Attendance: {guide.attendanceReq}</h2>
             </div>
-            <h2 className = "text-white mr-150  mt-10 ">
+            <h2 className = "text-white  ml-10 mt-20 ">
                 {guide.comments}
 
             </h2>

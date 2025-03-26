@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {BiChevronDown} from 'react-icons/bi'
 const NewGuide = () => {
+    const [courseName, setCourseName] = useState('');
     const [dept, setDept] = useState('');
     const [openDept, setOpenDept] = useState(false);
     const[courseNumber, setCourseNumber] = useState('');
@@ -12,7 +13,14 @@ const NewGuide = () => {
     const[yearTaken, setYearTaken] = useState('')
     const[attendanceReq, setAttendanceReq] = useState('')
     const[openAttendanceReq, setOpenAttendanceReq] = useState(false)
+    const[difficulty, setDifficulty] = useState('')
     const[comments, setComments] = useState('')
+    const today = new Date();
+    const month = today.getMonth();
+    const day = today.getDate();
+    const year = today.getFullYear();
+    const theDate = `${year}-${month}-${day}`;
+    const semesterTaken = `${term} ${year}`;
     function handleDeptDropdowwn(value){
         setDept(value);
         setOpenDept(false);
@@ -29,14 +37,48 @@ const NewGuide = () => {
         console.log(value);
     }
     function handleAttendanceDropdown(value){
-        setTerm(value);
-        setOpenTerm(false);
+        setAttendanceReq(value);
+        setOpenAttendanceReq(false);
         console.log(value);
     }
+    const handleSubmit = () => {
+        const body = {
+            "courseName": courseName,
+            "dept": dept,
+            "courseNumber": courseNumber,
+            "profName": profName,
+            "grade": grade,
+            "difficulty": difficulty,
+            "attendanceReq": attendanceReq,
+            "comments": comments,
+            "date": theDate,
+            "semTaken": semesterTaken
+        };
+        fetch('http://localhost:8080/newGuide', {
+            method: 'POST',
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(body)
+        }).then(response=>{
+            //this if statement portion is pretty much chatgpt
+            //get rid of it once ur done debugging
+            if (!response.ok) {
+                console.log(response.json())
+            }
+            return response.json();
+        })
+            }
+
+
+
     return (
         <div className = "overflow-x-clip">
-            <h1 className = "relative top-25 left-125 text-3xl text-white">Select the course department: </h1>
-            <div className = " relative top-30 left-115 w-120 font-medium h-80">
+            <h1 className = "relative top-25 left-133 text-3xl text-white">Select the course name: </h1>
+            <form className = "relative left-120 top-30">
+                <input className = "bg-vtgray w-110 h-10  rounded-lg" placeholder = "Enter course name" type="text" value = {courseName} onChange = {(e) => setCourseName(e.target.value)}/>
+            </form>
+            <h1 className = "relative top-35 left-125 text-3xl text-white">Select the course department: </h1>
+
+            <div className = " relative top-40 left-115 w-120 font-medium h-80">
                 <div
                     onClick={()=>setOpenDept(!openDept)}
                     className = "bg-vtorange border-4 border-vtorange text-white  w-full p-2 flex items-center justify-between rounded">
@@ -188,8 +230,8 @@ const NewGuide = () => {
                     <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleDeptDropdowwn("WGS")}>Women's and Gender Studies</li>
                 </ul>
             </div>
-            <h1 className = "relative left-130 top-50 text-white text-3xl">Enter the course number:</h1>
-            <form className = "relative left-119 top-52">
+            <h1 className = "relative left-130 top-60 text-white text-3xl">Enter the course number:</h1>
+            <form className = "relative left-119 top-62">
                     <input className = "bg-vtgray w-110 h-10  rounded-lg" type="text" placeholder = "Enter number" value = {courseNumber} onChange = {(e) => setCourseNumber(e.target.value)}/>
             </form>
             <h1 className = "relative left-120 top-70 text-white text-3xl">Enter the professor's last name:</h1>
@@ -253,10 +295,15 @@ const NewGuide = () => {
                     <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleAttendanceDropdown("Optional")}>Optional</li>
                 </ul>
             </div>
-            <h1 className = "relative left-115 top-75 text-white text-3xl">Provide any guidance you might have: </h1>
-            <form className = "relative left-123 top-80">
-                <textarea className = "bg-vtgray w-110 rounded-lg" cols = "30" rows = "10" placeholder = "Enter guidance"></textarea>
+            <h1 className = "relative left-138 top-90 text-white text-3xl">Rate the difficulty (1-5): </h1>
+            <form className = "relative left-123 top-95">
+                <input className = "bg-vtgray w-110 h-10 rounded-lg"  placeholder = "Enter difficulty" value = {difficulty} onChange = {(e) => setDifficulty(e.target.value)}></input>
             </form>
+            <h1 className = "relative left-115 top-105 text-white text-3xl">Provide any guidance you might have: </h1>
+            <form className = "relative left-123 top-110">
+                <textarea className = "bg-vtgray w-110 rounded-lg" cols = "30" rows = "10" placeholder = "Enter guidance" value = {comments} onChange = {(e) => setComments(e.target.value)}></textarea>
+            </form>
+            <button className = "relative left-141 top-115 w-75 h-15 text-white text-2xl hover:bg-vtgray bg-vtorange rounded-lg" onClick={handleSubmit}>Submit Guide</button>
 
         </div>
     )

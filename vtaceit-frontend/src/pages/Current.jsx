@@ -9,8 +9,9 @@ function Current() {
     useEffect(()=>{
         const getData = async() =>{
             try{
-                const response = await axios.get("http://localhost:8080/allGuides");
-                setGuides(response.data);
+                const response = await fetch("http://localhost:8080/allGuides");
+                const data = await response.json();
+                setGuides(data);
                 console.log(response.data);
             }
             catch(err){

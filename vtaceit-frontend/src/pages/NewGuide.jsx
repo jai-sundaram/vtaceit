@@ -2,49 +2,39 @@ import React, {useState} from 'react'
 import {BiChevronDown} from 'react-icons/bi'
 const NewGuide = () => {
     const [courseName, setCourseName] = useState('');
-    const [dept, setDept] = useState('');
+    const [dept, setDept] = useState('Select course department');
     const [openDept, setOpenDept] = useState(false);
     const[courseNumber, setCourseNumber] = useState('');
     const[profName, setProfName] = useState('');
-    const[grade, setGrade] = useState('');
+    const[grade, setGrade] = useState('Select grade');
     const[gradeOpen, setGradeOpen] = useState(false);
-    const[term, setTerm] = useState('');
+    const[term, setTerm] = useState('Select term');
     const[openTerm, setOpenTerm] = useState(false);
     const[yearTaken, setYearTaken] = useState('')
-    const[attendanceReq, setAttendanceReq] = useState('')
+    const[attendanceReq, setAttendanceReq] = useState('Select attendance requirement');
     const[openAttendanceReq, setOpenAttendanceReq] = useState(false)
     const[difficulty, setDifficulty] = useState('')
     const[comments, setComments] = useState('')
     const[wordLimit, setWordLimit] = useState(0)
     const today = new Date();
-    let month = today.getMonth();
-    const day = today.getDate();
-    const year = today.getFullYear();
-    if(month.length===1){
-        month = "0"+month;
-    }
-    const theDate = `${year}-${month}-${day}`;
-    const semesterTaken = `${term} ${year}`;
+    const[reviewIncomplete, setReviewIncomplete] = useState(false);
+    const semesterTaken = `${term} ${yearTaken}`;
     let realDifficulty = 0;
     function handleDeptDropdowwn(value){
         setDept(value);
         setOpenDept(false);
-        console.log(value);
     }
     function handleGradeDropdown(value){
         setGrade(value);
         setGradeOpen(false);
-        console.log(value);
     }
     function handleTermDropdown(value){
         setTerm(value);
         setOpenTerm(false);
-        console.log(value);
     }
     function handleAttendanceDropdown(value){
         setAttendanceReq(value);
         setOpenAttendanceReq(false);
-        console.log(value);
     }
     const handleWordLimit = (e) => {
         const input = e.target.value.split(' ');
@@ -59,37 +49,42 @@ const NewGuide = () => {
     }
     const handleSubmit = () => {
         realDifficulty = parseInt(difficulty);
-        const body =
-            {
-                "courseName": courseName,
-                "courseDept": dept,
-                "courseNumber": courseNumber,
-                "profName": profName,
-                "grade": grade,
-                "difficulty": realDifficulty,
-                "attendanceReq": attendanceReq,
-                "comments": comments,
-                "date": `${today.getFullYear()}-0${today.getMonth()+1}-${today.getDate()}`,
-                "semTaken": semesterTaken,
+        if(courseName==="" || dept === "Select course department" || courseName===""
+            || grade === "Select grade" || term === "Select term" || yearTaken === "" ||
+            attendanceReq === "Select attendance requirement" || realDifficulty === 0 ||
+            comments === "") {
+            setReviewIncomplete(true);}
+        if(reviewIncomplete===false){
+            const body =
+                {
+                    "courseName": courseName,
+                    "courseDept": dept,
+                    "courseNumber": courseNumber,
+                    "profName": profName,
+                    "grade": grade,
+                    "difficulty": realDifficulty,
+                    "attendanceReq": attendanceReq,
+                    "comments": comments,
+                    "date": `${today.getFullYear()}-0${today.getMonth() + 1}-${today.getDate()}`,
+                    "semTaken": semesterTaken,
 
-            }
-        fetch('http://localhost:8080/newGuide', {
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(body)
-        }).then(response=>{
-            //this if statement portion is pretty much chatgpt
-            //get rid of it once ur done debugging
-            if (!response.ok) {
-                console.log(body)
-                console.log("didnt work")
-            }
-            else{
-                console.log(body)
-                console.log("it worked")
-            }
-        })
-            }
+                }
+            fetch('http://localhost:8080/newGuide', {
+                method: 'POST',
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(body)
+            }).then(response => {
+                //this if statement portion is pretty much chatgpt
+                //get rid of it once ur done debugging
+                if (!response.ok) {
+                    console.log(body)
+                    console.log("didnt work")
+                } else {
+                    console.log(body)
+                    console.log("it worked")
+                }
+            })
+        }   }
 
 
 
@@ -105,7 +100,7 @@ const NewGuide = () => {
                 <div
                     onClick={()=>setOpenDept(!openDept)}
                     className = "bg-vtorange border-4 border-vtorange text-white  w-full p-2 flex items-center justify-between rounded">
-                    Select Department
+                    {dept}
                     <BiChevronDown />
                 </div>
                 <ul className = {`bg-black   mt-2 overflow-y-auto ${openDept? "max-h-80": "max-h-0"}`}>
@@ -266,7 +261,7 @@ const NewGuide = () => {
                 <div
                     onClick={()=>setGradeOpen(!gradeOpen)}
                     className = "bg-vtorange border-4 border-vtorange text-white  w-full p-2 flex items-center justify-between rounded">
-                    Select Grade
+                    {grade}
                     <BiChevronDown />
                 </div>
                 <ul className = {`bg-black   mt-2 overflow-y-auto ${gradeOpen? "max-h-80": "max-h-0"}`}>
@@ -291,7 +286,7 @@ const NewGuide = () => {
                 <div
                     onClick={()=>setOpenTerm(!openTerm)}
                     className = "bg-vtorange border-4 border-vtorange text-white  w-full p-2 flex items-center justify-between rounded">
-                    Select Semester
+                    {term}
                     <BiChevronDown />
                 </div>
                 <ul className = {`bg-black   mt-2 overflow-y-auto ${openTerm? "max-h-80": "max-h-0"}`}>
@@ -310,7 +305,7 @@ const NewGuide = () => {
                 <div
                     onClick={()=>setOpenAttendanceReq(!openAttendanceReq)}
                     className = "bg-vtorange border-4 border-vtorange text-white  w-full p-2 flex items-center justify-between rounded">
-                    Select Attendance Policy
+                    {attendanceReq}
                     <BiChevronDown />
                 </div>
                 <ul className = {`bg-black   mt-2 overflow-y-auto ${openAttendanceReq? "max-h-80": "max-h-0"}`}>
@@ -323,12 +318,17 @@ const NewGuide = () => {
             <form className = "relative left-123 top-95">
                 <input className = "bg-vtgray w-110 h-10 rounded-lg"  id ="diff" placeholder = "Enter difficulty" value = {difficulty} onChange = {(e) => setDifficulty(e.target.value)}></input>
             </form>
-            <h1 className = "relative left-115 top-105 text-white text-3xl">Provide any guidance you might have: </h1>
+            <h1 className = "relative left-95 top-105 text-white text-3xl">Provide any guidance you might have (150 words max): </h1>
             <form className = "relative left-123 top-110">
                 <textarea className = "bg-vtgray w-110 rounded-lg" cols = "30" rows = "10" placeholder = "Enter guidance" value = {comments} onChange = {(e) => {setComments(e.target.value);  handleWordLimit(e)}}></textarea>
             </form>
             <h1 className = "relative left-165 top-112 text-white text-sm">Words used: {wordLimit}</h1>
-            <button className = "relative left-141 top-115 w-75 h-15 text-white text-2xl hover:bg-vtgray bg-vtorange rounded-lg" onClick={handleSubmit}>Submit Guide</button>
+            {reviewIncomplete ?
+                <h1 className = "relative left-153 top-119 text-white text-lg">The review is incomplete!</h1>:
+
+                <h1></h1>
+            }
+            <button className = "relative left-141 top-125 w-75 h-15 text-white text-2xl hover:bg-vtgray bg-vtorange rounded-lg" onClick={handleSubmit}>Submit Guide</button>
 
         </div>
     )

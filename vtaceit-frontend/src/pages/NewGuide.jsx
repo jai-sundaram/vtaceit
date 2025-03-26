@@ -16,11 +16,15 @@ const NewGuide = () => {
     const[difficulty, setDifficulty] = useState('')
     const[comments, setComments] = useState('')
     const today = new Date();
-    const month = today.getMonth();
+    let month = today.getMonth();
     const day = today.getDate();
     const year = today.getFullYear();
+    if(month.length===1){
+        month = "0"+month;
+    }
     const theDate = `${year}-${month}-${day}`;
     const semesterTaken = `${term} ${year}`;
+    let realDifficulty = 0;
     function handleDeptDropdowwn(value){
         setDept(value);
         setOpenDept(false);
@@ -42,18 +46,33 @@ const NewGuide = () => {
         console.log(value);
     }
     const handleSubmit = () => {
-        const body = {
-            "courseName": courseName,
-            "dept": dept,
-            "courseNumber": courseNumber,
-            "profName": profName,
-            "grade": grade,
-            "difficulty": difficulty,
-            "attendanceReq": attendanceReq,
-            "comments": comments,
-            "date": theDate,
-            "semTaken": semesterTaken
-        };
+        realDifficulty = parseInt(difficulty);
+        const body =
+            // {
+            //     "courseName": courseName,
+            //     "courseDept": dept,
+            //     "courseNumber": courseNumber,
+            //     "profName": profName,
+            //     "grade": grade,
+            //     "difficulty": realDifficulty,
+            //     "attendanceReq": attendanceReq,
+            //     "comments": comments,
+            //     "date": theDate,
+            //     "semTaken": semesterTaken
+            // }
+            {
+                "courseName": courseName,
+                "courseDept": dept,
+                "courseNumber": courseNumber,
+                "profName": profName,
+                "grade": grade,
+                "difficulty": realDifficulty,
+                "attendanceReq": attendanceReq,
+                "comments": comments,
+                "date": `${today.getFullYear()}-0${today.getMonth()+1}-${today.getDate()}`,
+                "semTaken": semesterTaken,
+
+            }
         fetch('http://localhost:8080/newGuide', {
             method: 'POST',
             headers: {"Content-Type": "application/json"},
@@ -62,9 +81,13 @@ const NewGuide = () => {
             //this if statement portion is pretty much chatgpt
             //get rid of it once ur done debugging
             if (!response.ok) {
-                console.log(response.json())
+                console.log(body)
+                console.log("didnt work")
             }
-            return response.json();
+            else{
+                console.log(body)
+                console.log("it worked")
+            }
         })
             }
 
@@ -297,7 +320,7 @@ const NewGuide = () => {
             </div>
             <h1 className = "relative left-138 top-90 text-white text-3xl">Rate the difficulty (1-5): </h1>
             <form className = "relative left-123 top-95">
-                <input className = "bg-vtgray w-110 h-10 rounded-lg"  placeholder = "Enter difficulty" value = {difficulty} onChange = {(e) => setDifficulty(e.target.value)}></input>
+                <input className = "bg-vtgray w-110 h-10 rounded-lg"  id ="diff" placeholder = "Enter difficulty" value = {difficulty} onChange = {(e) => setDifficulty(e.target.value)}></input>
             </form>
             <h1 className = "relative left-115 top-105 text-white text-3xl">Provide any guidance you might have: </h1>
             <form className = "relative left-123 top-110">

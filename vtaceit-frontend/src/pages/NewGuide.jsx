@@ -3,9 +3,34 @@ import {BiChevronDown} from 'react-icons/bi'
 const NewGuide = () => {
     const [dept, setDept] = useState('');
     const [openDept, setOpenDept] = useState(false);
+    const[courseNumber, setCourseNumber] = useState('');
+    const[profName, setProfName] = useState('');
+    const[grade, setGrade] = useState('');
+    const[gradeOpen, setGradeOpen] = useState(false);
+    const[term, setTerm] = useState('');
+    const[openTerm, setOpenTerm] = useState(false);
+    const[yearTaken, setYearTaken] = useState('')
+    const[attendanceReq, setAttendanceReq] = useState('')
+    const[openAttendanceReq, setOpenAttendanceReq] = useState(false)
+    const[comments, setComments] = useState('')
     function handleDeptDropdowwn(value){
         setDept(value);
         setOpenDept(false);
+        console.log(value);
+    }
+    function handleGradeDropdown(value){
+        setGrade(value);
+        setGradeOpen(false);
+        console.log(value);
+    }
+    function handleTermDropdown(value){
+        setTerm(value);
+        setOpenTerm(false);
+        console.log(value);
+    }
+    function handleAttendanceDropdown(value){
+        setTerm(value);
+        setOpenTerm(false);
         console.log(value);
     }
     return (
@@ -15,7 +40,7 @@ const NewGuide = () => {
                 <div
                     onClick={()=>setOpenDept(!openDept)}
                     className = "bg-vtorange border-4 border-vtorange text-white  w-full p-2 flex items-center justify-between rounded">
-                    Select Category
+                    Select Department
                     <BiChevronDown />
                 </div>
                 <ul className = {`bg-black   mt-2 overflow-y-auto ${openDept? "max-h-80": "max-h-0"}`}>
@@ -165,9 +190,75 @@ const NewGuide = () => {
             </div>
             <h1 className = "relative left-130 top-50 text-white text-3xl">Enter the course number:</h1>
             <form className = "relative left-119 top-52">
-                    <input className = "bg-vtgray w-110 h-8  rounded-lg" type="text" />
+                    <input className = "bg-vtgray w-110 h-10  rounded-lg" type="text" placeholder = "Enter number" value = {courseNumber} onChange = {(e) => setCourseNumber(e.target.value)}/>
             </form>
+            <h1 className = "relative left-120 top-70 text-white text-3xl">Enter the professor's last name:</h1>
+            <form className = "relative left-119 top-72">
+                <input className = "bg-vtgray w-110 h-10  rounded-lg" placeholder = "Enter name" type="text" value = {profName} onChange = {(e) => setProfName(e.target.value)}/>
+            </form>
+            <h1 className = "relative left-131 top-90 text-white text-3xl">Select the grade received: </h1>
+            <div className = " relative top-95 left-115 w-120 font-medium h-80">
+                <div
+                    onClick={()=>setGradeOpen(!gradeOpen)}
+                    className = "bg-vtorange border-4 border-vtorange text-white  w-full p-2 flex items-center justify-between rounded">
+                    Select Grade
+                    <BiChevronDown />
+                </div>
+                <ul className = {`bg-black   mt-2 overflow-y-auto ${gradeOpen? "max-h-80": "max-h-0"}`}>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>A</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A-")}>A-</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("B+")}>B+</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("B")}>B</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("B-")}>B</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>C+</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>C</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>C-</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>D+</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>D</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>D-</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>F</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("I")}>I</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("P")}>P</li>
+                </ul>
             </div>
+            <h1 className = "relative left-100 top-120 text-white text-3xl">Select the term in which you took the class:</h1>
+            <div className = " relative top-125 left-115 w-120 font-medium h-80">
+                <div
+                    onClick={()=>setOpenTerm(!openTerm)}
+                    className = "bg-vtorange border-4 border-vtorange text-white  w-full p-2 flex items-center justify-between rounded">
+                    Select Semester
+                    <BiChevronDown />
+                </div>
+                <ul className = {`bg-black   mt-2 overflow-y-auto ${openTerm? "max-h-80": "max-h-0"}`}>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleTermDropdown("Fall")}>Fall</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleTermDropdown("Fall")}>Winter</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleTermDropdown("Spring")}>Spring</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleTermDropdown("Spring")}>Summer</li>
+                </ul>
+            </div>
+            <h1 className = "relative left-100 top-105 text-white text-3xl">Enter the year in which you took the class:</h1>
+            <form className = "relative left-119 top-110">
+                <input className = "bg-vtgray w-110 h-10  rounded-lg" type="text" placeholder = "Enter year" value = {yearTaken} onChange = {(e) => setYearTaken(e.target.value)}/>
+            </form>
+            <h1 className = "relative left-130 top-125 text-white text-3xl">Select the attendance policy: </h1>
+            <div className = " relative top-130 left-118 w-120 font-medium h-80">
+                <div
+                    onClick={()=>setOpenAttendanceReq(!openAttendanceReq)}
+                    className = "bg-vtorange border-4 border-vtorange text-white  w-full p-2 flex items-center justify-between rounded">
+                    Select Attendance Policy
+                    <BiChevronDown />
+                </div>
+                <ul className = {`bg-black   mt-2 overflow-y-auto ${openAttendanceReq? "max-h-80": "max-h-0"}`}>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleAttendanceDropdown("Mandatory")}>Mandatory</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleAttendanceDropdown("Optional")}>Optional</li>
+                </ul>
+            </div>
+            <h1 className = "relative left-115 top-75 text-white text-3xl">Provide any guidance you might have: </h1>
+            <form className = "relative left-123 top-80">
+                <textarea className = "bg-vtgray w-110 rounded-lg" cols = "30" rows = "10" placeholder = "Enter guidance"></textarea>
+            </form>
+
+        </div>
     )
 }
 export default NewGuide

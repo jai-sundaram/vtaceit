@@ -15,6 +15,7 @@ const NewGuide = () => {
     const[openAttendanceReq, setOpenAttendanceReq] = useState(false)
     const[difficulty, setDifficulty] = useState('')
     const[comments, setComments] = useState('')
+    const[wordLimit, setWordLimit] = useState(0)
     const today = new Date();
     let month = today.getMonth();
     const day = today.getDate();
@@ -45,21 +46,20 @@ const NewGuide = () => {
         setOpenAttendanceReq(false);
         console.log(value);
     }
+    const handleWordLimit = (e) => {
+        const input = e.target.value.split(' ');
+        if(input.length<150){
+            setComments(e.target.value);
+            setWordLimit(input.length);
+        }
+        else{
+            alert("You may only type 150 words!")
+        }
+
+    }
     const handleSubmit = () => {
         realDifficulty = parseInt(difficulty);
         const body =
-            // {
-            //     "courseName": courseName,
-            //     "courseDept": dept,
-            //     "courseNumber": courseNumber,
-            //     "profName": profName,
-            //     "grade": grade,
-            //     "difficulty": realDifficulty,
-            //     "attendanceReq": attendanceReq,
-            //     "comments": comments,
-            //     "date": theDate,
-            //     "semTaken": semesterTaken
-            // }
             {
                 "courseName": courseName,
                 "courseDept": dept,
@@ -316,6 +316,7 @@ const NewGuide = () => {
                 <ul className = {`bg-black   mt-2 overflow-y-auto ${openAttendanceReq? "max-h-80": "max-h-0"}`}>
                     <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleAttendanceDropdown("Mandatory")}>Mandatory</li>
                     <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleAttendanceDropdown("Optional")}>Optional</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleAttendanceDropdown("Optional")}>Asynchronous</li>
                 </ul>
             </div>
             <h1 className = "relative left-138 top-90 text-white text-3xl">Rate the difficulty (1-5): </h1>
@@ -324,8 +325,9 @@ const NewGuide = () => {
             </form>
             <h1 className = "relative left-115 top-105 text-white text-3xl">Provide any guidance you might have: </h1>
             <form className = "relative left-123 top-110">
-                <textarea className = "bg-vtgray w-110 rounded-lg" cols = "30" rows = "10" placeholder = "Enter guidance" value = {comments} onChange = {(e) => setComments(e.target.value)}></textarea>
+                <textarea className = "bg-vtgray w-110 rounded-lg" cols = "30" rows = "10" placeholder = "Enter guidance" value = {comments} onChange = {(e) => {setComments(e.target.value);  handleWordLimit(e)}}></textarea>
             </form>
+            <h1 className = "relative left-165 top-112 text-white text-sm">Words used: {wordLimit}</h1>
             <button className = "relative left-141 top-115 w-75 h-15 text-white text-2xl hover:bg-vtgray bg-vtorange rounded-lg" onClick={handleSubmit}>Submit Guide</button>
 
         </div>

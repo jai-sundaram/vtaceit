@@ -1,3 +1,8 @@
+//incompleteness functionality partially working
+//cannot submit a completely filled one in the same session as a previously
+//partially complete one
+
+
 import React, {useState} from 'react'
 import {BiChevronDown} from 'react-icons/bi'
 const NewGuide = () => {
@@ -53,7 +58,13 @@ const NewGuide = () => {
             || grade === "Select grade" || term === "Select term" || yearTaken === "" ||
             attendanceReq === "Select attendance requirement" || realDifficulty === 0 ||
             comments === "") {
-            setReviewIncomplete(true);}
+            setReviewIncomplete(true)
+            console.log("will not add");
+        return;
+        }
+        else{
+            setReviewIncomplete(false);
+        }
         if(reviewIncomplete===false){
             const body =
                 {
@@ -325,7 +336,6 @@ const NewGuide = () => {
             <h1 className = "relative left-165 top-112 text-white text-sm">Words used: {wordLimit}</h1>
             {reviewIncomplete ?
                 <h1 className = "relative left-153 top-119 text-white text-lg">The review is incomplete!</h1>:
-
                 <h1></h1>
             }
             <button className = "relative left-141 top-125 w-75 h-15 text-white text-2xl hover:bg-vtgray bg-vtorange rounded-lg" onClick={handleSubmit}>Submit Guide</button>

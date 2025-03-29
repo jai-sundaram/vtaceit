@@ -15,7 +15,7 @@ const NewGuide = () => {
     const[openAttendanceReq, setOpenAttendanceReq] = useState(false)
     const[difficulty, setDifficulty] = useState('')
     const[comments, setComments] = useState('')
-    const[wordLimit, setWordLimit] = useState(0)
+    const[wordLimit, setWordLimit] = useState()
     const[message, setMessage] = useState('')
     const today = new Date();
     const semesterTaken = `${term} ${yearTaken}`;
@@ -52,11 +52,21 @@ const NewGuide = () => {
         realDifficulty = parseInt(difficulty);
         isIncomplete = courseName==="" || dept === "Select course department" || courseNumber===""
             || profName === "" || grade === "Select grade" || term === "Select term" || yearTaken === "" ||
-            attendanceReq === "Select attendance requirement" || realDifficulty === 0 || comments === ""
+            attendanceReq === "Select attendance requirement" || difficulty === "" || comments === ""
         console.log(isIncomplete)
         if(isIncomplete===false){
             console.log('adding')
             setMessage("Guide complete!")
+            setCourseName('')
+            setDept('Select course department')
+            setCourseNumber('')
+            setProfName('')
+            setGrade('Select grade')
+            setTerm('Select term')
+            setYearTaken('')
+            setAttendanceReq('Select attendance requirement')
+            setDifficulty('0')
+            setComments('')
             const body =
                 {
                     "courseName": courseName,
@@ -275,14 +285,14 @@ const NewGuide = () => {
                     <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A-")}>A-</li>
                     <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("B+")}>B+</li>
                     <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("B")}>B</li>
-                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("B-")}>B</li>
-                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>C+</li>
-                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>C</li>
-                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>C-</li>
-                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>D+</li>
-                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>D</li>
-                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>D-</li>
-                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("A")}>F</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("B-")}>B-</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("C+")}>C+</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("C")}>C</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("C-")}>C-</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("D+")}>D+</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("D")}>D</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("D-")}>D-</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("F")}>F</li>
                     <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("I")}>I</li>
                     <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleGradeDropdown("P")}>P</li>
                 </ul>
@@ -297,9 +307,9 @@ const NewGuide = () => {
                 </div>
                 <ul className = {`bg-black   mt-2 overflow-y-auto ${openTerm? "max-h-80": "max-h-0"}`}>
                     <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleTermDropdown("Fall")}>Fall</li>
-                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleTermDropdown("Fall")}>Winter</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleTermDropdown("Winter")}>Winter</li>
                     <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleTermDropdown("Spring")}>Spring</li>
-                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleTermDropdown("Spring")}>Summer</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleTermDropdown("Summer")}>Summer</li>
                 </ul>
             </div>
             <h1 className = "relative left-100 top-105 text-white text-3xl">Enter the year in which you took the class:</h1>
@@ -317,19 +327,19 @@ const NewGuide = () => {
                 <ul className = {`bg-black   mt-2 overflow-y-auto ${openAttendanceReq? "max-h-80": "max-h-0"}`}>
                     <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleAttendanceDropdown("Mandatory")}>Mandatory</li>
                     <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleAttendanceDropdown("Optional")}>Optional</li>
-                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleAttendanceDropdown("Optional")}>Asynchronous</li>
+                    <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleAttendanceDropdown("Asynchronous")}>Asynchronous</li>
                 </ul>
             </div>
             <h1 className = "relative left-138 top-90 text-white text-3xl">Rate the difficulty (1-5): </h1>
             <form className = "relative left-123 top-95">
-                <input className = "bg-vtgray w-110 h-10 rounded-lg"  id ="diff" placeholder = "Enter difficulty" value = {difficulty} onChange = {(e) => setDifficulty(e.target.value)}></input>
+                <input className = "bg-vtgray w-110 h-10 rounded-lg"  id ="diff" value = {difficulty} onChange = {(e) => setDifficulty(e.target.value)}></input>
             </form>
             <h1 className = "relative left-95 top-105 text-white text-3xl">Provide any guidance you might have (150 words max): </h1>
             <form className = "relative left-123 top-110">
-                <textarea className = "bg-vtgray w-110 rounded-lg" cols = "30" rows = "10" placeholder = "Enter guidance" value = {comments} onChange = {(e) => {setComments(e.target.value);  handleWordLimit(e)}}></textarea>
+                <textarea className = "bg-vtgray w-110 rounded-lg" cols = "30" rows = "10" value = {comments} onChange = {(e) => {setComments(e.target.value);  handleWordLimit(e)}}></textarea>
             </form>
             <h1 className = "relative left-165 top-112 text-white text-sm">Words used: {wordLimit}</h1>
-                <h1 className = "relative left-153 top-119 text-white text-lg">{message}</h1>:
+                <h1 className = "relative left-159 top-119 text-white text-lg">{message}</h1>:
             <button className = "relative left-141 top-125 w-75 h-15 text-white text-2xl hover:bg-vtgray bg-vtorange rounded-lg" onClick={handleSubmit}>Submit Guide</button>
 
         </div>

@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {BiChevronDown} from "react-icons/bi";
 import Guide from "./Guide.jsx";
-
+import { useNavigate } from "react-router-dom";
 
 
 ///const response = fetch(`http://localhost:8080/guides?dept=${dept}&number=${courseNumber}`)
@@ -21,17 +21,23 @@ const Navbar = () => {
     const handleSearch = async () => {
         isIncomplete = dept === 'Select department' || courseNumber === ''
         console.log(isIncomplete)
-        if(!isIncomplete){
-        const response = await fetch(`http://localhost:8080/guides?dept=${dept}&number=${courseNumber}`)
-        const data = await response.json();
-        setResults(data)
-        console.log(data)
-            setMessage("")
-        setShowDept(dept)
-        setShowNumber(courseNumber)
+        try{
+            if(!isIncomplete){
+
+                const response = await fetch(`http://localhost:8080/guides?dept=${dept}&number=${courseNumber}`)
+                const data = await response.json();
+                setResults(data)
+                console.log(data)
+                setMessage("")
+                setShowDept(dept)
+                setShowNumber(courseNumber)
+            }
+            else{
+                setMessage("Please input all the search options!")
+            }
         }
-        else{
-            setMessage("Please input all the search options!")
+        catch(err){
+            console.log(err)
         }
     }
 

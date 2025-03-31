@@ -2,8 +2,9 @@ import {useEffect, useState} from 'react'
 
 import axios from "axios";
 import Guide from "../assets/Guide.jsx";
+import Navbar from "../assets/Navbar.jsx";
 
-function Current() {
+function AllReviews() {
     const [guides, setGuides] = useState([]);
 
     useEffect(()=>{
@@ -21,13 +22,16 @@ function Current() {
         getData();
     }, [])
     return (
+        <div>
+        <Navbar/>
         <ul className = "ml-50 mt-50 flex flex-col gap-20 justify-center max-w-screen">
             {guides.map((guide)=>(
                 <Guide guide = {guide} />
             ))}
             <br />
         </ul>
+        </div>
     )
 }
 
-export default Current
+export default AllReviews

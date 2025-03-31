@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {BiChevronDown} from 'react-icons/bi'
+import Navbar from "../assets/Navbar.jsx";
 const NewGuide = () => {
     const [courseName, setCourseName] = useState('');
     const [dept, setDept] = useState('Select course department');
@@ -106,6 +107,7 @@ const NewGuide = () => {
 
     return (
         <div className = "overflow-x-clip">
+            <Navbar/>
             <h1 className = "relative top-25 left-133 text-3xl text-white">Select the course name: </h1>
             <form className = "relative left-120 top-30">
                 <input className = "bg-vtgray w-110 h-10  rounded-lg" placeholder = "Enter course name" type="text" value = {courseName} onChange = {(e) => setCourseName(e.target.value)}/>

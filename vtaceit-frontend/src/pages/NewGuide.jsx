@@ -339,7 +339,7 @@ const NewGuide = () => {
                 <textarea className = "bg-vtgray w-110 rounded-lg" cols = "30" rows = "10" value = {comments} onChange = {(e) => {setComments(e.target.value);  handleWordLimit(e)}}></textarea>
             </form>
             <h1 className = "relative left-165 top-112 text-white text-sm">Words used: {wordLimit}</h1>
-                <h1 className = "relative left-159 top-119 text-white text-lg">{message}</h1>:
+                <h1 className = "relative left-159 top-119 text-white text-lg">{message}</h1>
             <button className = "relative left-141 top-125 w-75 h-15 text-white text-2xl hover:bg-vtgray bg-vtorange rounded-lg" onClick={handleSubmit}>Submit Guide</button>
 
         </div>

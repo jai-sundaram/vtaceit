@@ -1,8 +1,9 @@
 import React from 'react'
+import Navbar from "../assets/Navbar.jsx";
 
 const Results = () => {
     return (
-        <div>Results</div>
+        <div>< Navbar/></div>
     )
 }
 export default Results

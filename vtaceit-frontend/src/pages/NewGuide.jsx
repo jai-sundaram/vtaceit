@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {BiChevronDown} from 'react-icons/bi'
-import Navbar from "../assets/Navbar.jsx";
+import Navbar from "../components/Navbar.jsx";
 const NewGuide = () => {
     const [courseName, setCourseName] = useState('');
     const [dept, setDept] = useState('Select course department');
@@ -78,7 +78,7 @@ const NewGuide = () => {
                     "difficulty": realDifficulty,
                     "attendanceReq": attendanceReq,
                     "comments": comments,
-                    "date": `${today.getFullYear()}-0${today.getMonth() + 1}-${today.getDate()}`,
+                    "date": `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`,
                     "semTaken": semesterTaken,
 
                 }
@@ -272,7 +272,9 @@ const NewGuide = () => {
             </form>
             <h1 className = "relative left-120 top-70 text-white text-3xl">Enter the professor's last name:</h1>
             <form className = "relative left-119 top-72">
-                <input className = "bg-vtgray w-110 h-10  rounded-lg" placeholder = "Enter name" type="text" value = {profName} onChange = {(e) => setProfName(e.target.value)}/>
+                <input className = "bg-vtgray w-110 h-10  rounded-lg" placeholder = "Enter name" type="text" value = {profName} onChange = {(e) => {
+                    const formattedName = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
+                    setProfName(formattedName)} }/>
             </form>
             <h1 className = "relative left-131 top-90 text-white text-3xl">Select the grade received: </h1>
             <div className = " relative top-95 left-115 w-120 font-medium h-80">
@@ -334,11 +336,11 @@ const NewGuide = () => {
             </div>
             <h1 className = "relative left-138 top-90 text-white text-3xl">Rate the difficulty (1-5): </h1>
             <form className = "relative left-123 top-95">
-                <input className = "bg-vtgray w-110 h-10 rounded-lg"  id ="diff" value = {difficulty} onChange = {(e) => setDifficulty(e.target.value)}></input>
+                <input className = "bg-vtgray w-110 h-10 rounded-lg"  id ="diff" value = {difficulty} placeholder = "Enter difficulty (1-5)" onChange = {(e) => setDifficulty(e.target.value)}></input>
             </form>
             <h1 className = "relative left-95 top-105 text-white text-3xl">Provide any guidance you might have (150 words max): </h1>
             <form className = "relative left-123 top-110">
-                <textarea className = "bg-vtgray w-110 rounded-lg" cols = "30" rows = "10" value = {comments} onChange = {(e) => {setComments(e.target.value);  handleWordLimit(e)}}></textarea>
+                <textarea className = "bg-vtgray w-110 rounded-lg" cols = "30" rows = "10" placeholder = "Enter any comments" value = {comments} onChange = {(e) => {setComments(e.target.value);  handleWordLimit(e)}}></textarea>
             </form>
             <h1 className = "relative left-165 top-112 text-white text-sm">Words used: {wordLimit}</h1>
                 <h1 className = "relative left-159 top-119 text-white text-lg">{message}</h1>

@@ -12,7 +12,8 @@ const App = () => {
     return (
         <Router>
             <Routes>
-                <Route path = "/home" element ={<AllReviews />} />
+                <Route path = "/allGuides" element ={<AllReviews />} />
+                <Route path = "" element ={<Home />} />
                 <Route path = "/newGuide" element ={<NewGuide />} />
                 <Route path = "/search" element ={<Results  />} />
                 <Route path = "/error" element ={<ErrorPage  />} />

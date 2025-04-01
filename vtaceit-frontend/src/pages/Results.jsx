@@ -2,8 +2,8 @@ import React, {useState} from 'react'
 import {BiChevronDown} from "react-icons/bi";
 
 import { useNavigate } from "react-router-dom";
-import Guide from "../assets/Guide.jsx";
-import Navbar from "../assets/Navbar.jsx";
+import Guide from "../components/Guide.jsx";
+import Navbar from "../components/Navbar.jsx";
 
 ///const response = fetch(`http://localhost:8080/guides?dept=${dept}&number=${courseNumber}`)
 const Results = () => {
@@ -205,12 +205,12 @@ const Results = () => {
                         <li className="p-2 text-sm hover:bg-vtgray text-white" onClick={() => handleDeptDropdown("WGS")}>Women's and Gender Studies</li>
                     </ul>
                 </div>
-                <input className  = "bg-vtgray w-110 h-12 rounded-lg float-left ml-10 mt-30" type="text" value = {courseNumber} onChange = {(e) => setCourseNumber(e.target.value)}></input>
-                <button className = "float-left ml-9 mt-30  w-30 h-12 text-white text-xs hover:bg-vtgray bg-vtorange rounded-xl" onClick={handleSearch} >Submit Guide</button>
+                <input className  = "bg-vtgray w-110 h-12 rounded-lg float-left ml-10 mt-30" type="text" placeholder = "Enter course number" value = {courseNumber} onChange = {(e) => setCourseNumber(e.target.value)}></input>
+                <button className = "float-left ml-9 mt-30  w-30 h-12 text-white text-lg hover:bg-vtgray bg-vtorange rounded-xl" onClick={handleSearch} >Search</button>
             </div>
-            <h1 className = "float-right mr-150 mt-2 text-white text-xs ">{message}</h1>
+            <h1 className = "float-right mr-152 mt-2 text-white text-xs ">{message}</h1>
             <h1 className = "float-right mr-120 mt-10 text-white text-5xl ">{showResultsMessage}</h1>
-            <h1 className = "float-right mr-150 mt-6 text-white text-5xl ">{showDept}{showNumber}</h1>:
+            <h1 className = "float-right mr-150 mt-6 text-white text-5xl ">{showDept}{showNumber}</h1>
 
 
 

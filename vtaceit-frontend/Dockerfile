@@ -13,7 +13,7 @@ RUN npm install
 
 #now we want to copy the rest of the src files over
 #we want to put in the same working directory which is the /app folder
-COPY . .
+COPY src .
 
 #now we want to expose the port the application is running on
 EXPOSE 5173

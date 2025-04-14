@@ -1,6 +1,37 @@
 version: "3.7"
 services:
   backend:
-    #the build is where u specify the path
-    build: myProjectVtAceIt
-    
+    build:
+      #the context is where u specify the path
+      context: .
+      #need to also mention the dockerfile
+      dockerfile: myProjectVtAceIt/Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - vtaceit-network
+  frontend:
+    build:
+      context: .
+      dockerfile: vtaceit-frontend/Dockerfile
+    ports:
+      - "5173:5173"
+    networks:
+      - vtaceit-network
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_user: root
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: vtaceit_docker
+    ports:
+      - "5432:5432"
+    networks:
+      - vtaceit-network
+    volumes:
+      - vtaceit-data
+networks:
+  vtaceit-network:
+    driver: bridge
+volumes:
+  vtaceit-data:

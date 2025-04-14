@@ -31,12 +31,14 @@ public class GuideController {
     //also, if you are using request parameters isntead of path variables, you just need the general path, not actually specify the paramaters
     //so it will be just /guides in the path of the GetMapping
     //spring will automatically generate that path
+    @CrossOrigin
     @GetMapping(path = "/guides")
     public List<Guide> getByIdentifier(@RequestParam(value ="dept", required = true) String deptName, @RequestParam(value = "number", required = true) Integer courseNumber){
             return service.getByIdentifier(deptName, courseNumber);
     }
     //done
     //add functionality which checks if there is already a dupe in the db
+    @CrossOrigin
     @PostMapping(path="/newGuide")
     public ResponseEntity<Object> addGuide(@RequestBody Guide guide){
         try{

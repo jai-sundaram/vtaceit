@@ -3,17 +3,20 @@ services:
   backend:
     build:
       #the context is where u specify the path
-      context: .
+      #this path is where the docker app is basically examining
+      context: ./myProjectVtAceIt
       #need to also mention the dockerfile
-      dockerfile: myProjectVtAceIt/Dockerfile
+      #this docker file is inside
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     networks:
       - vtaceit-network
   frontend:
     build:
-      context: .
-      dockerfile: vtaceit-frontend/Dockerfile
+      #this context is basically what the docker application is looking at
+      context: ./vtaceit-frontend
+      dockerfile: Dockerfile
     ports:
       - "5173:5173"
     networks:
@@ -21,7 +24,7 @@ services:
   postgres:
     image: postgres:latest
     environment:
-      POSTGRES_user: root
+      POSTGRES_USER: root
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: vtaceit_docker
     ports:
@@ -29,7 +32,7 @@ services:
     networks:
       - vtaceit-network
     volumes:
-      - vtaceit-data
+      - vtaceit-data:/var/lib/postgresql/data
 networks:
   vtaceit-network:
     driver: bridge

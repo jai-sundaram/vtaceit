@@ -1,21 +1,46 @@
 #we will building off a node.js image
-FROM node:latest
+#stage 1 - building the file
+FROM node:latest as build-stage
 
-#the work directory should be in a subfolder of the image
+#making a new directory
+RUN mkdir /usr/app
 
-#we want to copy over the package.json file to the root of the working directory of the docker container
-#which in this case is /app
+#copying everything from the current folder over to this new one
+COPY . /usr/app
 
-COPY package.json .
+#making this the working directory
+WORKDIR /usr/app
 
-#now we will install all the package dependencies in the package.json file
 RUN npm install
 
-#now we want to copy the rest of the src files over
-#we want to put in the same working directory which is the /app folder
-COPY src .
+RUN npm run build
 
-#now we want to expose the port the application is running on
-EXPOSE 5173
-#now we want to actually run the react application inside the container
-CMD ["npm", "start"]
+
+
+#Adding the local ode_modules to PATH
+ENV PATH=/usr/app/node_modules/.bin:$PATH
+
+#stage 2 - serving the docker file using nginx
+#getting the image
+FROM nginx:alpine
+#setting the working directory
+WORKDIR /usr/share/nginx/html
+
+#removing the default stuff
+RUN rm -rf ./*
+
+#copying everything from the og build environment to the final image
+COPY --from=build-stage /usr/app/dist .
+#running the nginx server
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+
+
+
+
+
+
+
+
+
+
+

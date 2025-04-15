@@ -209,8 +209,8 @@ const Results = () => {
                 <button className = "float-left ml-9 mt-30  w-30 h-12 text-white text-lg hover:bg-vtgray bg-vtorange rounded-xl" onClick={handleSearch} >Search</button>
             </div>
             <h1 className = "float-right mr-152 mt-2 text-white text-xs ">{message}</h1>
-            <h1 className = "float-right mr-120 mt-10 text-white text-5xl ">{showResultsMessage}</h1>
-            <h1 className = "float-right mr-150 mt-6 text-white text-5xl ">{showDept}{showNumber}</h1>
+            <h1 className = "float-right mr-158 mt-10 text-white text-5xl ">{showResultsMessage}</h1>
+            <h1 className = "float-right mr-178 mt-6 text-white text-5xl ">{showDept}{showNumber}</h1>
 
 
 

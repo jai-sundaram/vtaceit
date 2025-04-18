@@ -82,7 +82,7 @@ const NewGuide = () => {
                     "semTaken": semesterTaken,
 
                 }
-            fetch('http://54.174.82.52:8080/newGuide', {
+            fetch('http://18.206.162.228:8080/newGuide', {
                 method: 'POST',
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)

@@ -5,8 +5,6 @@ import NewGuide from "./pages/NewGuide.jsx";
 import Home from "./pages/Home.jsx";
 import Results from "./pages/Results.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
-import TestPage from "./pages/TestPage.jsx";
-
 
 const App = () => {
     return (
@@ -17,7 +15,6 @@ const App = () => {
                 <Route path = "/newGuide" element ={<NewGuide />} />
                 <Route path = "/search" element ={<Results  />} />
                 <Route path = "/error" element ={<ErrorPage  />} />
-                <Route path = "/test" element ={<TestPage  />} />
             </Routes>
         </Router>
 

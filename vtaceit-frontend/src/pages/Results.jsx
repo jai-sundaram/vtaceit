@@ -27,7 +27,7 @@ const Results = () => {
         console.log(isIncomplete)
             if(!isIncomplete){
                 setShowResultsMessage("Showing results for:")
-                const response = await fetch(`http://54.174.82.52:8080/guides?dept=${dept}&number=${courseNumber}`)
+                const response = await fetch(`http://18.206.162.228:8080/guides?dept=${dept}&number=${courseNumber}`)
                 //try catch only looks at network errors, not http codes
                 if(response.ok){
                     const data = await response.json();

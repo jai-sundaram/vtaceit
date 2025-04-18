@@ -10,7 +10,7 @@ function AllReviews() {
     useEffect(()=>{
         const getData = async() =>{
             try{
-                const response = await fetch("http://54.174.82.52:8080/allGuides");
+                const response = await fetch("http://18.206.162.228:8080/allGuides");
                 const data = await response.json();
                 setGuides(data);
                 console.log(data);

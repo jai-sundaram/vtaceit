@@ -7,7 +7,9 @@ const Home = () => {
 
         <Navbar />
             <article>
-                <img src="src/assets/vtblack.png" className = "h-60 w-160 mt-17 mr-20 float-right" alt="Logo" />
+                {/*the image should be in the root directory */}
+                {/* for the image path, it should be simply /[image.extension]*/}
+                <img src="/vtblack.png" className = "h-60 w-160 mt-17 mr-20 float-right" alt="Logo" />
                 <h1 className = "text-white text-8xl  ml-20 mt-10 w-120 clear-left"> Welcome To VTAceIt!</h1>
                 <p className = "w-100 ml-30 mt-6  text-3xl text-white clear-left">Search for guidance, provide guidance to future students, and explore courses!</p>
             </article>
